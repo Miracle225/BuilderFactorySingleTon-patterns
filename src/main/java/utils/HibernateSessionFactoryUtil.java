@@ -1,0 +1,32 @@
+package utils;
+//import models.AutoSeller;
+import models.House;
+import models.User;
+import models.Auto;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+
+public class HibernateSessionFactoryUtil {
+    public static SessionFactory sessionFactory;
+    private HibernateSessionFactoryUtil(){}
+
+    public static SessionFactory getSessionFactory(){
+        if(sessionFactory==null){
+            try{
+                Configuration configuration = new Configuration().configure();
+                configuration.addAnnotatedClass(User.class);
+                configuration.addAnnotatedClass(Auto.class);
+                //configuration.addAnnotatedClass(AutoSeller.class);
+                configuration.addAnnotatedClass(House.class);
+                StandardServiceRegistryBuilder SSRB = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
+                sessionFactory = configuration.buildSessionFactory(SSRB.build());
+
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }
+        }
+       return sessionFactory;
+    }
+
+}
