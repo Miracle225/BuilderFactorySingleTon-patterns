@@ -2,12 +2,15 @@ import java.math.BigDecimal;
 import java.sql.*;
 
 import Fabric.FabricDAO;
+import Observer.Observer;
+import Observer.UserObserved;
 import dao.UserDao;
 import dao.UserDaoJDBC;
 import enums.TypeDAO;
 import models.Auto;
 //import models.AutoSeller;
 import models.House;
+import models.Subscriber;
 import models.User;
 import models.User.UserBuilder;
 //import services.AutoSellerService;
@@ -16,13 +19,13 @@ import services.UserService;
 import java.sql.SQLException;
 
 public class main {
-    public static void main(String[] args) throws  ClassNotFoundException {
+    public static void main(String[] args){
         UserService userService = new UserService(TypeDAO.HIBERNATE);
         User.UserBuilder userBuilder = new UserBuilder();
         Auto.AutoBuilder autoBuilder = new Auto.AutoBuilder();
         House.HouseBuilder houseBuilder = new House.HouseBuilder();
         User user6 = userBuilder
-                .setName("Jonh")
+                .setName("John")
                 .setAge(18)
                 .setBankAccount(new BigDecimal("3425647434623657"))
                 .build();
@@ -82,10 +85,28 @@ public class main {
         userService.updateUser(user7);
         user7.setName("Uriy");
         userService.updateUser(user7);
+        User user2 = new User("Dima",35, new BigDecimal("4556554427485623"));
+        userService.saveUser(user2);
+        House house3 = new House("Winston st 34",36);
+        house2.setUser(user2);
+        user2.addHouse(house3);
+        Auto maserati = new Auto("Maserati","Pro1", "orange");
+        maserati.setUser(user2);
+        user2.addAuto(maserati);
+        Auto nissan = new Auto("Nissan","GTR", "yellow");
+        nissan.setUser(user2);
+        user2.addAuto(nissan);
+        userService.updateUser(user2);
+        UserObserved userObserved = new UserObserved();
+        userObserved.addUser(user6);
+        userObserved.addUser(user7);
+        Observer subscriber1 = new Subscriber("James Smith");
+        Observer subscriber2 = new Subscriber("Lukas Gamer");
+        userObserved.addObserver(subscriber1);
+        userObserved.addObserver(subscriber2);
+        userObserved.addUser(user2);
 
         UserService userServiceSql = new UserService(TypeDAO.SQL);
-
-
 
         /*User user = new User("Masha",26, new BigDecimal("405844274856231"));
         userService.saveUser(user);
@@ -143,15 +164,12 @@ UserService userService1 = new UserService(TypeDAO.SQL);
             Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
             try (Connection conn = DriverManager.getConnection(url, username, password)){
                 userServiceSql.getConnection(conn);
-                User user2 = userBuilder
+                User lisa = userBuilder
                         .setName("Lisa")
                         .setAge(41)
                         .setBankAccount(new BigDecimal("0825647434623657"))
                         .build();
-                userServiceSql.saveUser(user2);
-                user2.setAge(58);
-                userServiceSql.updateUser(user2);
-                userServiceSql.deleteUser(user2);
+                userServiceSql.saveUser(lisa);
                 System.out.println("Connection to Store DB successful!");
 
 

@@ -19,7 +19,8 @@ public class HibernateSessionFactoryUtil {
                 configuration.addAnnotatedClass(Auto.class);
                 //configuration.addAnnotatedClass(AutoSeller.class);
                 configuration.addAnnotatedClass(House.class);
-                StandardServiceRegistryBuilder SSRB = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
+                StandardServiceRegistryBuilder SSRB = new StandardServiceRegistryBuilder()
+                        .applySettings(configuration.getProperties());
                 sessionFactory = configuration.buildSessionFactory(SSRB.build());
 
             }catch (Exception ex){

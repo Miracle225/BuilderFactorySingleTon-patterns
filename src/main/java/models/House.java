@@ -61,6 +61,16 @@ public class House {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "House{" +
+                "id=" + id +
+                ", address='" + address + '\'' +
+                ", area=" + area +
+                '}';
+    }
+
     public static class HouseBuilder {
         private String address;
         private float area;
@@ -79,6 +89,8 @@ public class House {
         public House build(){
             return new House(address,area);
         }
+
+
     }
 }
 

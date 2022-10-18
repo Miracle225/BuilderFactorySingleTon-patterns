@@ -97,6 +97,15 @@ public class Auto {
         public Auto build(){
             return new Auto(brand,color,model);
         }
+
+        @Override
+        public String toString() {
+            return "AutoBuilder{" +
+                    "model='" + model + '\'' +
+                    ", color='" + color + '\'' +
+                    ", brand='" + brand + '\'' +
+                    '}';
+        }
     }
 
 }
