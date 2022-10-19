@@ -85,8 +85,11 @@ public class main {
         userService.updateUser(user7);
         user7.setName("Uriy");
         userService.updateUser(user7);
+        Observer subscriber1 = new Subscriber("James Smith");
+        Observer subscriber2 = new Subscriber("Lukas Gamer");
+        userService.addObserver(subscriber1);
+        userService.addObserver(subscriber2);
         User user2 = new User("Dima",35, new BigDecimal("4556554427485623"));
-        userService.saveUser(user2);
         House house3 = new House("Winston st 34",36);
         house2.setUser(user2);
         user2.addHouse(house3);
@@ -96,15 +99,9 @@ public class main {
         Auto nissan = new Auto("Nissan","GTR", "yellow");
         nissan.setUser(user2);
         user2.addAuto(nissan);
+        userService.saveUser(user2);
         userService.updateUser(user2);
-        UserObserved userObserved = new UserObserved();
-        userObserved.addUser(user6);
-        userObserved.addUser(user7);
-        Observer subscriber1 = new Subscriber("James Smith");
-        Observer subscriber2 = new Subscriber("Lukas Gamer");
-        userObserved.addObserver(subscriber1);
-        userObserved.addObserver(subscriber2);
-        userObserved.addUser(user2);
+        userService.deleteUser(user7);
 
         UserService userServiceSql = new UserService(TypeDAO.SQL);
 

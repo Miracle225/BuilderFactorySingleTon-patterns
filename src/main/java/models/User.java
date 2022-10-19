@@ -99,9 +99,7 @@ public class User {
    public void setBankAccount(BigDecimal bankAccount) {
       this.bankAccount = bankAccount;
    }
-   public void newBuilder(){
 
-   }
 
    @Override
    public String toString() {
