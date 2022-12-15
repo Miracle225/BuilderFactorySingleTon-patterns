@@ -4,6 +4,7 @@ import Fabric.FabricDAO;
 import Observer.Observer;
 import dao.UserDao;
 import dao.UserDaoHibernate;
+import enums.Role;
 import enums.TypeDAO;
 import models.Auto;
 import models.House;
@@ -24,33 +25,51 @@ UserObserved userObserved = new UserObserved();
     }
 
     public User findUser(int id) {
+        if(userDao.findById(id) == null)
+            System.out.println("User did not find");
         return userDao.findById(id);
     }
 
-    public void saveUser(User user) {
-        userDao.save(user);
-        userObserved.addUser(user);
+    public void saveUser(User user,Role role) {
+        if(role.equals(Role.USER)){
+            System.out.println("Access denied, only Admin can do this operation");
+        }
+        else {
+            userDao.save(user);
+            userObserved.addUser(user);
+        }
     }
 
-    public void updateUser(User user) {
+    public void updateUser(User user,Role role) {
+        if(role.equals(Role.USER))
+            System.out.println("Access denied, only Admin can do this operation");
+else
         userDao.update(user);
     }
 
-    public void deleteUser(User user) {
+    public void deleteUser(User user,Role role) {
+        if(role.equals(Role.USER)){
+            System.out.println("Access denied, only Admin can do this operation");
 
-        userDao.delete(user);
-        userObserved.removeUser(user);
+        }
+        else {
+            userDao.delete(user);
+            userObserved.removeUser(user);
+        }
     }
 
     public Auto findAutoById(int id) {
+
         return userDao.findAutoById(id);
     }
 
     public House findHouseById(int id) {
+
         return userDao.findHouseById(id);
     }
 
     public List<User> findAll() {
+
         return userDao.findAll();
     }
     public Connection getConnection(Connection conn){

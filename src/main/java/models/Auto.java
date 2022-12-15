@@ -1,6 +1,8 @@
 package models;
 
 
+import Memento.Save;
+
 import javax.persistence.*;
 
 @Entity
@@ -30,6 +32,19 @@ public class Auto {
         this.model = model;
         this.color = color;
         this.brand = brand;
+    }
+
+
+    public Save save(){
+        return new Save(id,model,color,brand);
+    }
+
+    public void CancelAction(Save save){
+
+        id=save.getId();
+        model=save.getModel();
+        color=save.getColor();
+        brand=save.getBrand();
     }
 
     public int getId() {
@@ -72,20 +87,22 @@ public class Auto {
     public String toString() {
         return color + " " + brand + " " + model;
     }
+
     public static class AutoBuilder {
         private String model;
         private String color;
         private String brand;
+
         public AutoBuilder() {
         }
 
         public AutoBuilder setBrand(String brand) {
-           this.brand = brand;
+            this.brand = brand;
             return this;
         }
 
         public AutoBuilder setColor(String color) {
-           this.color = color;
+            this.color = color;
             return this;
         }
 
@@ -94,8 +111,9 @@ public class Auto {
             this.model = model;
             return this;
         }
-        public Auto build(){
-            return new Auto(brand,color,model);
+
+        public Auto build() {
+            return new Auto(brand, color, model);
         }
 
         @Override
